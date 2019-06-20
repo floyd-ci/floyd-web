@@ -1,0 +1,23 @@
+{
+	"name": "floyd-web",
+	"version": "1.0.0",
+	"description": "The web application for Floyd CI",
+	"author": "The Floyd CI authors",
+	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/floyd-ci/floyd-web.git"
+	},
+	"devDependencies": {
+		"rollup": "^1.15.6",
+		"rollup-plugin-copy": "^3.0.0",
+		"rollup-plugin-node-resolve": "^5.0.3",
+		"rollup-plugin-postcss": "^2.0.3",
+		"rollup-plugin-svelte": "^5.1.0",
+		"svelte": "^3.5.3"
+	},
+	"scripts": {
+		"prebuild": "rm -rf dist",
+		"build": "rollup -c"
+	}
+}
