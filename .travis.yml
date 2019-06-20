@@ -1,0 +1,14 @@
+language: node_js
+node_js: node
+
+script:
+    - npm run build
+
+deploy:
+    provider: pages
+    local_dir: dist
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    fqdn: $FLOYD_CI_DOMAIN
+    on:
+        branch: master
