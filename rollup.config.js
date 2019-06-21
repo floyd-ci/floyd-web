@@ -1,5 +1,6 @@
 import copy from 'rollup-plugin-copy';
 import postcss from 'rollup-plugin-postcss';
+import purgecss from '@fullhuman/postcss-purgecss';
 import resolve from 'rollup-plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
 import {terser} from 'rollup-plugin-terser';
@@ -20,6 +21,17 @@ export default {
 		}),
 		postcss({
 			extract: true,
+			minimize: production,
+			plugins: [
+				purgecss({
+					content: [
+						'./src/**/*.svelte',
+						'./src/index.html',
+					],
+					whitelistPatterns: [/^svelte-/],
+					whitelistPatternsChildren: [/^svelte-/],
+				}),
+			],
 		}),
 		resolve({
 			browser: true,
