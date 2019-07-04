@@ -13,6 +13,7 @@
 		"bulma": "^0.7.5",
 		"node-sass": "^4.12.0",
 		"rollup": "^1.15.6",
+		"rollup-plugin-browsersync": "^1.0.0",
 		"rollup-plugin-copy": "^3.0.0",
 		"rollup-plugin-node-resolve": "^5.0.3",
 		"rollup-plugin-postcss": "^2.0.3",
@@ -22,6 +23,7 @@
 	},
 	"scripts": {
 		"prebuild": "rm -rf dist",
-		"build": "rollup -c"
+		"build": "rollup -c",
+		"start": "rollup -cw"
 	}
 }

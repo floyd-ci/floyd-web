@@ -1,3 +1,4 @@
+import browsersync from 'rollup-plugin-browsersync';
 import copy from 'rollup-plugin-copy';
 import postcss from 'rollup-plugin-postcss';
 import purgecss from '@fullhuman/postcss-purgecss';
@@ -14,6 +15,10 @@ export default {
 		format: 'esm',
 	},
 	plugins: [
+		!production && browsersync({
+			open: true,
+			server: 'dist',
+		}),
 		copy({
 			targets: [
 				{src: 'src/index.html', dest: 'dist'},
@@ -44,4 +49,7 @@ export default {
 			module: true,
 		}),
 	],
+	watch: {
+		clearScreen: false,
+	},
 };
