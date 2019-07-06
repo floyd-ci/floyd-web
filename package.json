@@ -20,12 +20,20 @@
 		"rollup-plugin-postcss": "^2.0.3",
 		"rollup-plugin-svelte": "^5.1.0",
 		"rollup-plugin-terser": "^5.0.0",
-		"svelte": "^3.5.3"
+		"svelte": "^3.5.3",
+		"xo": "^0.24.0"
 	},
 	"scripts": {
 		"prebuild": "rm -rf dist",
 		"build": "rollup -c",
 		"start": "rollup -cw",
-		"test": "ava"
+		"test": "xo && ava"
+	},
+	"xo": {
+		"envs": ["browser"],
+		"rules": {
+			"comma-dangle": ["error", "always-multiline"],
+			"max-len": ["error", {"code": 80, "tabWidth": 8}]
+		}
 	}
 }
