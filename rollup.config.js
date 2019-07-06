@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import browsersync from 'rollup-plugin-browsersync';
 import copy from 'rollup-plugin-copy';
 import postcss from 'rollup-plugin-postcss';
@@ -8,6 +9,16 @@ import {terser} from 'rollup-plugin-terser';
 
 const production = !process.env.ROLLUP_WATCH;
 
+function handle404(req, res, next) {
+	const {pathname} = new URL(req.url, 'https://example.org');
+	const fileExists = fs.existsSync('dist' + pathname);
+	if (!fileExists && !pathname.startsWith('/browser-sync/')) {
+		req.url = '/index.html';
+	}
+
+	return next();
+}
+
 export default {
 	input: 'src/main.js',
 	output: {
@@ -17,7 +28,10 @@ export default {
 	plugins: [
 		!production && browsersync({
 			open: true,
-			server: 'dist',
+			server: {
+				baseDir: 'dist',
+				middleware: handle404,
+			},
 		}),
 		copy({
 			targets: [
