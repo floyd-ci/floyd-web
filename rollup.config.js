@@ -13,7 +13,7 @@ function handle404(req, res, next) {
 	const {pathname} = new URL(req.url, 'https://example.org');
 	const fileExists = fs.existsSync('dist' + pathname);
 	if (!fileExists && !pathname.startsWith('/browser-sync/')) {
-		req.url = '/index.html';
+		req.url = '/404.html';
 	}
 
 	return next();
@@ -35,6 +35,7 @@ export default {
 		}),
 		copy({
 			targets: [
+				{src: 'src/404.html', dest: 'dist'},
 				{src: 'src/index.html', dest: 'dist'},
 			],
 		}),

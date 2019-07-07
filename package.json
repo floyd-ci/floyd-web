@@ -32,6 +32,7 @@
 	"xo": {
 		"envs": ["browser"],
 		"rules": {
+			"camelcase": "off",
 			"comma-dangle": ["error", "always-multiline"],
 			"max-len": ["error", {"code": 80, "tabWidth": 8}]
 		}
