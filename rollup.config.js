@@ -43,7 +43,7 @@ export default {
 			extract: true,
 			minimize: production,
 			plugins: [
-				purgecss({
+				production && purgecss({
 					content: [
 						'./src/**/*.svelte',
 						'./src/index.html',
