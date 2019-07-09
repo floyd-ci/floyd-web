@@ -12,7 +12,10 @@
 		"@fullhuman/postcss-purgecss": "^1.2.0",
 		"ava": "^2.1.0",
 		"bulma": "^0.7.5",
+		"coveralls": "^3.0.4",
+		"esm": "^3.2.25",
 		"node-sass": "^4.12.0",
+		"nyc": "^14.1.1",
 		"rollup": "^1.15.6",
 		"rollup-plugin-browsersync": "^1.0.0",
 		"rollup-plugin-copy": "^3.0.0",
@@ -27,7 +30,11 @@
 		"prebuild": "rm -rf dist",
 		"build": "rollup -c",
 		"start": "rollup -cw",
-		"test": "xo && ava"
+		"test": "xo && nyc ava",
+		"coverage": "nyc report --reporter=text-lcov | coveralls"
+	},
+	"ava": {
+		"require": ["esm"]
 	},
 	"xo": {
 		"envs": ["browser"],
