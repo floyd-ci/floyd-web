@@ -2,17 +2,15 @@
 	import PageHeader from './components/PageHeader.svelte';
 	import PageFooter from './components/PageFooter.svelte';
 
-	export let name;
+	export let page;
 </script>
-
-<style>
-	h1 {
-		color: purple;
-	}
-</style>
 
 <PageHeader/>
 
-<h1>Hello {name}!</h1>
+<section class="section">
+	<div class="container">
+		<svelte:component this={page}/>
+	</div>
+</section>
 
 <PageFooter/>
