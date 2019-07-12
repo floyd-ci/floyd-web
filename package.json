@@ -13,6 +13,13 @@
 		"ava": "^2.1.0",
 		"bulma": "^0.7.5",
 		"coveralls": "^3.0.4",
+		"eslint": "6.0.1",
+		"eslint-config-prettier": "6.0.0",
+		"eslint-plugin-ava": "7.1.0",
+		"eslint-plugin-import": "2.18.0",
+		"eslint-plugin-promise": "4.2.1",
+		"eslint-plugin-svelte3": "2.7.0",
+		"eslint-plugin-unicorn": "9.1.1",
 		"esm": "^3.2.25",
 		"node-sass": "^4.12.0",
 		"nyc": "^14.1.1",
@@ -23,25 +30,16 @@
 		"rollup-plugin-postcss": "^2.0.3",
 		"rollup-plugin-svelte": "^5.1.0",
 		"rollup-plugin-terser": "^5.0.0",
-		"svelte": "^3.5.3",
-		"xo": "^0.24.0"
+		"svelte": "^3.5.3"
 	},
 	"scripts": {
 		"prebuild": "rm -rf dist",
 		"build": "rollup -c",
 		"start": "rollup -cw",
-		"test": "xo && nyc ava",
+		"test": "nyc ava",
 		"coverage": "nyc report --reporter=text-lcov | coveralls"
 	},
 	"ava": {
 		"require": ["esm"]
-	},
-	"xo": {
-		"envs": ["browser"],
-		"rules": {
-			"camelcase": "off",
-			"comma-dangle": ["error", "always-multiline"],
-			"max-len": ["error", {"code": 80, "tabWidth": 8}]
-		}
 	}
 }

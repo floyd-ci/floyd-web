@@ -3,6 +3,7 @@ node_js: node
 cache: npm
 
 script:
+    - npx eslint '**/*.{js,svelte}'
     - npm test
     - npm run build
 

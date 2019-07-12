@@ -1,0 +1,22 @@
+extends:
+  - eslint:recommended
+  - plugin:ava/recommended
+  - plugin:import/recommended
+  - plugin:promise/recommended
+  - plugin:unicorn/recommended
+  - prettier
+overrides:
+  - files: 'rollup.config.js'
+    env: {node: true}
+  - files: 'src/**/*'
+    env: {browser: true}
+  - files: '**/*.svelte'
+    processor: svelte3/svelte3
+  - files: '**/*.svelte/*.js'
+    rules:
+      import/no-unresolved: off
+      unicorn/filename-case: off
+plugins:
+  - svelte3
+rules:
+  unicorn/prevent-abbreviations: off
