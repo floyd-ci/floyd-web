@@ -1,5 +1,5 @@
 import "bulma/bulma.sass"; // eslint-disable-line import/no-unassigned-import
-import App from "./App.svelte";
+import App from "./app.svelte";
 
 import Index from "./routes/index.svelte";
 import NotFound from "./routes/404.svelte";
