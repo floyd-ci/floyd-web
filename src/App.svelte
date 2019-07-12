@@ -1,16 +1,16 @@
 <script>
-	import PageHeader from './components/PageHeader.svelte';
-	import PageFooter from './components/PageFooter.svelte';
+  import PageHeader from "./components/PageHeader.svelte";
+  import PageFooter from "./components/PageFooter.svelte";
 
-	export let page;
+  export let page;
 </script>
 
-<PageHeader/>
+<PageHeader />
 
 <section class="section">
-	<div class="container">
-		<svelte:component this={page}/>
-	</div>
+  <div class="container">
+    <svelte:component this={page} />
+  </div>
 </section>
 
-<PageFooter/>
+<PageFooter />
