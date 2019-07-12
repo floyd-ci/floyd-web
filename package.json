@@ -38,8 +38,7 @@
     "prebuild": "rm -rf dist",
     "build": "rollup -c",
     "start": "rollup -cw",
-    "test": "nyc ava",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "test": "ava"
   },
   "ava": {
     "require": [

@@ -5,11 +5,11 @@ cache: npm
 script:
   - npx prettier --check '**/*'
   - npx eslint '**/*.{js,svelte}'
-  - npm test
+  - npx nyc ava --verbose
   - npm run build
 
 after_success:
-  - npm run coverage
+  - npx nyc report --reporter=text-lcov | npx coveralls
 
 deploy:
   provider: pages
