@@ -1,6 +1,6 @@
 <script>
-  import PageHeader from "./components/PageHeader.svelte";
-  import PageFooter from "./components/PageFooter.svelte";
+  import PageHeader from "./components/page-header.svelte";
+  import PageFooter from "./components/page-footer.svelte";
 
   export let page;
 </script>

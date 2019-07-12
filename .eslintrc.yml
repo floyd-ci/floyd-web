@@ -12,10 +12,6 @@ overrides:
     env: {browser: true}
   - files: "**/*.svelte"
     processor: svelte3/svelte3
-  - files: "**/*.svelte/*.js"
-    rules:
-      import/no-unresolved: off
-      unicorn/filename-case: off
 plugins:
   - svelte3
 rules:
