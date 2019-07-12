@@ -1,0 +1,9 @@
+/.nyc_output/*
+/dist/*
+/src/404.html
+/src/index.html
+/.eslintignore
+/.gitignore
+/.prettierignore
+/LICENSE
+/package-lock.json
