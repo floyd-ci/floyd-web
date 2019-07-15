@@ -15,8 +15,13 @@ const app = new App({
   target: document.body,
 });
 
-if (location.pathname === "/") {
-  app.$set({page: Index});
-} else {
-  app.$set({page: NotFound});
+function select_page(path) {
+  if (path === "/") {
+    return Index;
+  } else {
+    return NotFound;
+  }
 }
+
+const page = select_page(location.pathname);
+app.$set({page});
