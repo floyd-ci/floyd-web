@@ -23,5 +23,9 @@ function select_page(path) {
   }
 }
 
-const page = select_page(location.pathname);
-app.$set({page});
+function navigate() {
+  const page = select_page(location.pathname);
+  app.$set({page});
+}
+
+navigate();
