@@ -15,8 +15,49 @@ const app = new App({
   target: document.body,
 });
 
-if (location.pathname === "/") {
-  app.$set({page: Index});
-} else {
-  app.$set({page: NotFound});
+function select_page(path) {
+  if (path === "/") {
+    return Index;
+  } else {
+    return NotFound;
+  }
 }
+
+function navigate() {
+  const page = select_page(location.pathname);
+  app.$set({page});
+}
+
+function find_anchor(target) {
+  var node = target;
+  if (!(node instanceof Node)) {
+    return;
+  }
+  while (node && node.nodeName.toUpperCase() !== "A") {
+    node = node.parentNode;
+  }
+  if (node && node instanceof HTMLAnchorElement) {
+    return node;
+  }
+  return null;
+}
+
+function handle_click(event) {
+  if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey) {
+    return;
+  }
+
+  const a = find_anchor(event.target);
+  if (!a || a.host !== location.host) {
+    return;
+  }
+
+  event.preventDefault();
+  history.pushState(null, "", a.href);
+  navigate();
+}
+
+window.addEventListener("click", handle_click);
+window.addEventListener("popstate", navigate);
+
+navigate();
