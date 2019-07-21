@@ -13,7 +13,7 @@
     "ava": "2.2.0",
     "bulma": "0.7.5",
     "coveralls": "3.0.5",
-    "eslint": "6.0.1",
+    "eslint": "6.1.0",
     "eslint-config-prettier": "6.0.0",
     "eslint-plugin-ava": "7.1.0",
     "eslint-plugin-import": "2.18.0",
