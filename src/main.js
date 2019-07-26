@@ -2,6 +2,7 @@ import "bulma/bulma.sass"; // eslint-disable-line import/no-unassigned-import
 import App from "./app.svelte";
 
 import Index from "./routes/index.svelte";
+import SignUp from "./routes/signup.svelte";
 import NotFound from "./routes/404.svelte";
 
 // In case we have to deliver the 404.html
@@ -18,6 +19,8 @@ const app = new App({
 function select_page(path) {
   if (path === "/") {
     return Index;
+  } else if (path === "/signup") {
+    return SignUp;
   } else {
     return NotFound;
   }
