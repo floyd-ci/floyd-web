@@ -32,7 +32,7 @@
     "rollup-plugin-postcss": "2.0.3",
     "rollup-plugin-svelte": "5.1.0",
     "rollup-plugin-terser": "5.1.1",
-    "svelte": "3.6.7"
+    "svelte": "3.6.9"
   },
   "scripts": {
     "prebuild": "rm -rf dist",
