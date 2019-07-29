@@ -1,6 +1,7 @@
 extends:
   - eslint:recommended
   - plugin:ava/recommended
+  - plugin:flowtype/recommended
   - plugin:import/recommended
   - plugin:promise/recommended
   - plugin:unicorn/recommended
@@ -16,3 +17,6 @@ plugins:
   - svelte3
 rules:
   unicorn/prevent-abbreviations: off
+settings:
+  flowtype:
+    onlyFilesWithFlowAnnotation: true
