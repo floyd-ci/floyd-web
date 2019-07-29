@@ -1,5 +1,7 @@
-import test from "ava";
+//@flow
 
-test("foo", t => {
+import test, {ExecutionContext} from "ava";
+
+test("foo", (t: ExecutionContext): void => {
   t.pass();
 });
