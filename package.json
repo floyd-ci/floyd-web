@@ -9,30 +9,35 @@
     "url": "git+https://github.com/floyd-ci/floyd-web.git"
   },
   "devDependencies": {
+    "@babel/plugin-transform-flow-strip-types": "7.4.4",
     "@fullhuman/postcss-purgecss": "1.2.0",
     "ava": "2.2.0",
+    "babel-eslint": "10.0.2",
     "bulma": "0.7.5",
     "coveralls": "3.0.5",
-    "eslint": "6.0.1",
+    "eslint": "6.1.0",
     "eslint-config-prettier": "6.0.0",
     "eslint-plugin-ava": "7.1.0",
-    "eslint-plugin-import": "2.18.0",
+    "eslint-plugin-flowtype": "3.12.2",
+    "eslint-plugin-import": "2.18.2",
     "eslint-plugin-promise": "4.2.1",
-    "eslint-plugin-svelte3": "2.7.1",
-    "eslint-plugin-unicorn": "9.1.1",
+    "eslint-plugin-svelte3": "2.7.3",
+    "eslint-plugin-unicorn": "10.0.0",
     "esm": "3.2.25",
+    "flow-bin": "0.104.0",
     "node-sass": "4.12.0",
     "nyc": "14.1.1",
     "prettier": "1.18.2",
     "prettier-plugin-svelte": "0.7.0",
-    "rollup": "1.16.7",
+    "rollup": "1.17.0",
     "rollup-plugin-browsersync": "1.0.0",
-    "rollup-plugin-copy": "3.0.0",
+    "rollup-plugin-copy": "3.1.0",
+    "rollup-plugin-flow": "1.1.1",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-postcss": "2.0.3",
     "rollup-plugin-svelte": "5.1.0",
     "rollup-plugin-terser": "5.1.1",
-    "svelte": "3.6.7"
+    "svelte": "3.6.9"
   },
   "scripts": {
     "prebuild": "rm -rf dist",
@@ -41,6 +46,13 @@
     "test": "ava"
   },
   "ava": {
+    "babel": {
+      "testOptions": {
+        "plugins": [
+          "@babel/plugin-transform-flow-strip-types"
+        ]
+      }
+    },
     "require": [
       "esm"
     ]

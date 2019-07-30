@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import browsersync from "rollup-plugin-browsersync";
 import copy from "rollup-plugin-copy";
+import flow from "rollup-plugin-flow";
 import postcss from "rollup-plugin-postcss";
 import purgecss from "@fullhuman/postcss-purgecss";
 import resolve from "rollup-plugin-node-resolve";
@@ -40,6 +41,7 @@ export default {
         {src: "src/index.html", dest: "dist"},
       ],
     }),
+    flow(),
     postcss({
       extract: true,
       minimize: production,

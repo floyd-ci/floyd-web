@@ -8,7 +8,7 @@
       <a class="navbar-item" href="/" title="Home">
         <strong>Floyd CI</strong>
       </a>
-      <a
+      <div
         role="button"
         class="navbar-burger {menu_active ? 'is-active' : null}"
         on:click={() => {
@@ -19,7 +19,7 @@
         <span aria-hidden="true" />
         <span aria-hidden="true" />
         <span aria-hidden="true" />
-      </a>
+      </div>
     </div>
     <div class="navbar-menu {menu_active ? 'is-active' : null}">
       <div class="navbar-end">
