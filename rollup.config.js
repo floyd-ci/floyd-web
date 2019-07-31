@@ -4,6 +4,7 @@ import copy from "rollup-plugin-copy";
 import flow from "rollup-plugin-flow";
 import postcss from "rollup-plugin-postcss";
 import purgecss from "@fullhuman/postcss-purgecss";
+import replace from "rollup-plugin-replace";
 import resolve from "rollup-plugin-node-resolve";
 import svelte from "rollup-plugin-svelte";
 import {terser} from "rollup-plugin-terser";
@@ -53,6 +54,13 @@ export default {
             whitelistPatternsChildren: [/^svelte-/],
           }),
       ],
+    }),
+    replace({
+      delimiters: ["<@", "@>"],
+      values: {
+        FLOYD_API_URL: process.env.FLOYD_API_URL,
+        FLOYD_AUTH_URL: process.env.FLOYD_AUTH_URL,
+      },
     }),
     resolve({
       browser: true,
