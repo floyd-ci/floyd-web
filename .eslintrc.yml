@@ -8,6 +8,7 @@ extends:
   - plugin:unicorn/recommended
   - prettier
   - prettier/@typescript-eslint
+  - prettier/unicorn
 overrides:
   - files: "*.config.js"
     env: {node: true}
