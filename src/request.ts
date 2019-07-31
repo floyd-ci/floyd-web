@@ -1,16 +1,17 @@
-// @flow
-
 import {add_auth_header} from "./auth";
 
-type Page = {
-  pagedata: Object,
-  pagination: ?{current: number, total: number},
-};
+interface Page {
+  pagedata: Record<string, any>;
+  pagination?: {
+    current: number;
+    total: number;
+  };
+}
 
 const API_URL = "<@FLOYD_API_URL@>";
 
-export async function get_object(url: string): Promise<Object> {
-  var headers = new Headers({
+export async function get_object(url: string): Promise<Record<string, any>> {
+  const headers = new Headers({
     Accept: "application/vnd.pgrst.object+json",
   });
 
@@ -31,7 +32,7 @@ export async function get_page(
   const from = (page - 1) * per_page;
   const to = from + per_page - 1;
 
-  var headers = new Headers({
+  const headers = new Headers({
     Prefer: "count=exact",
     Range: `${from}-${to}`,
     "Range-unit": "items",

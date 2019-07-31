@@ -1,9 +1,8 @@
-/.nyc_output/*
+/coverage/*
 /dist/*
 /src/404.html
 /src/index.html
 /.eslintignore
-/.flowconfig
 /.gitignore
 /.prettierignore
 /LICENSE

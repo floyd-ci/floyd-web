@@ -1,13 +1,15 @@
 extends:
   - eslint:recommended
-  - plugin:ava/recommended
-  - plugin:flowtype/recommended
   - plugin:import/recommended
+  - plugin:jest/recommended
   - plugin:promise/recommended
+  - plugin:@typescript-eslint/eslint-recommended
+  - plugin:@typescript-eslint/recommended
   - plugin:unicorn/recommended
   - prettier
+  - prettier/@typescript-eslint
 overrides:
-  - files: "rollup.config.js"
+  - files: "*.config.js"
     env: {node: true}
   - files: "src/**/*"
     env: {browser: true}
@@ -16,7 +18,9 @@ overrides:
 plugins:
   - svelte3
 rules:
+  "@typescript-eslint/camelcase": off
   unicorn/prevent-abbreviations: off
 settings:
-  flowtype:
-    onlyFilesWithFlowAnnotation: true
+  import/resolver:
+    node:
+      extensions: [".js", ".ts"]

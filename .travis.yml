@@ -4,13 +4,12 @@ cache: npm
 
 script:
   - npx prettier --check '**/*'
-  - npx eslint '**/*.{js,svelte}'
-  - npx flow
-  - npx nyc ava --verbose
-  - npm run build
+  - npx eslint '**/*.{js,ts,svelte}'
+  - npx jest --coverage
+  - npx rollup -c
 
 after_success:
-  - npx nyc report --reporter=text-lcov | npx coveralls
+  - cat coverage/lcov.info | npx coveralls
 
 deploy:
   provider: pages

@@ -1,13 +1,13 @@
 import * as fs from "fs";
 import browsersync from "rollup-plugin-browsersync";
 import copy from "rollup-plugin-copy";
-import flow from "rollup-plugin-flow";
 import postcss from "rollup-plugin-postcss";
 import purgecss from "@fullhuman/postcss-purgecss";
 import replace from "rollup-plugin-replace";
 import resolve from "rollup-plugin-node-resolve";
 import svelte from "rollup-plugin-svelte";
 import {terser} from "rollup-plugin-terser";
+import typescript from "rollup-plugin-typescript";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -42,7 +42,6 @@ export default {
         {src: "src/index.html", dest: "dist"},
       ],
     }),
-    flow(),
     postcss({
       extract: true,
       minimize: production,
@@ -69,6 +68,7 @@ export default {
       dev: !production,
       emitCss: true,
     }),
+    typescript(),
     production &&
       terser({
         module: true,

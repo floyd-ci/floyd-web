@@ -1,22 +1,68 @@
-// @flow
-
 import {writable} from "svelte/store";
 
-type Claims = {
-  exp: number,
-  role: string,
-};
+interface Claims {
+  exp: number;
+  role: string;
+}
 
-type LoginCred = {email: string, password: string};
-type LoginAuth = {service: string, token: string};
+interface LoginCred {
+  email: string;
+  password: string;
+}
 
-const AUTH_URL: string = "<@FLOYD_AUTH_URL@>";
+interface LoginAuth {
+  service: string;
+  token: string;
+}
 
-var token: string = localStorage.getItem("token") || "";
-var claims: ?Claims = decodeToken(token);
+const AUTH_URL = "<@FLOYD_AUTH_URL@>";
+
+async function post_json(
+  url: string,
+  data: Record<string, string>,
+): Promise<void> {
+  const response = await fetch(url, {
+    method: "POST",
+    credentials: "include",
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    throw await response.json();
+  }
+}
+
+function decodeToken(str: string): Claims | null {
+  const a = str.split(".");
+  if (a.length !== 3) {
+    return null;
+  }
+  return JSON.parse(atob(a[1]));
+}
+
+let token: string = localStorage.getItem("token") || "";
+let claims: Claims | null = decodeToken(token);
 const store = writable(claims);
 
-// --
+function clearToken(): void {
+  token = "";
+  claims = null;
+  store.set(claims);
+  localStorage.removeItem("token");
+}
+
+async function renewToken(): Promise<void> {
+  const response = await fetch(`${AUTH_URL}/api_token`, {
+    credentials: "include",
+  });
+  if (!response.ok) {
+    clearToken();
+    return;
+  }
+  token = (await response.json()).token;
+  claims = decodeToken(token);
+  store.set(claims);
+  localStorage.setItem("token", token);
+}
 
 export {store as claims};
 
@@ -73,46 +119,4 @@ export function link_service(service: string, code: string): Promise<void> {
 
 export function unlink_service(service: string): Promise<void> {
   return post_json(`${AUTH_URL}/unlink`, {service});
-}
-
-// --
-
-function decodeToken(str: string): ?Claims {
-  const a = str.split(".");
-  if (a.length !== 3) {
-    return null;
-  }
-  return JSON.parse(atob(a[1]));
-}
-
-async function renewToken(): Promise<void> {
-  const response = await fetch(`${AUTH_URL}/api_token`, {
-    credentials: "include",
-  });
-  if (!response.ok) {
-    clearToken();
-    return;
-  }
-  token = (await response.json()).token;
-  claims = decodeToken(token);
-  store.set(claims);
-  localStorage.setItem("token", token);
-}
-
-function clearToken(): void {
-  token = "";
-  claims = null;
-  store.set(claims);
-  localStorage.removeItem("token");
-}
-
-async function post_json(url: string, data: Object): Promise<void> {
-  const response = await fetch(url, {
-    method: "POST",
-    credentials: "include",
-    body: JSON.stringify(data),
-  });
-  if (!response.ok) {
-    throw await response.json();
-  }
 }
