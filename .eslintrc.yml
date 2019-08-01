@@ -20,6 +20,7 @@ plugins:
   - svelte3
 rules:
   "@typescript-eslint/camelcase": off
+  unicorn/catch-error-name: [error, {name: "err"}]
   unicorn/prevent-abbreviations: off
 settings:
   import/resolver:
