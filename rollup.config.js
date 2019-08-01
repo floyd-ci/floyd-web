@@ -68,7 +68,7 @@ export default {
       dev: !production,
       emitCss: true,
     }),
-    typescript(),
+    typescript({target: "ES2019"}),
     production &&
       terser({
         module: true,
