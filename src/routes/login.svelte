@@ -1,5 +1,7 @@
 <script>
   import AuthDialog from "../components/auth-dialog.svelte";
+  import EmailInput from "../components/email-input.svelte";
+  import PasswordInput from "../components/password-input.svelte";
   import {login} from "../auth";
 
   async function fetch_json(url) {
@@ -87,25 +89,6 @@
     <!-- nothing -->
   {/await}
 
-  <div class="field">
-    <p class="control">
-      <input
-        bind:value={email}
-        class="input"
-        name="email"
-        type="email"
-        placeholder="Your Email" />
-    </p>
-  </div>
-
-  <div class="field">
-    <p class="control">
-      <input
-        bind:value={password}
-        class="input"
-        name="password"
-        type="password"
-        placeholder="Your Password" />
-    </p>
-  </div>
+  <EmailInput name="email" bind:value={email} placeholder="Email" />
+  <PasswordInput name="password" bind:value={password} placeholder="Password" />
 </AuthDialog>
