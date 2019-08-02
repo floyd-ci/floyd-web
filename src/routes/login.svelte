@@ -3,6 +3,7 @@
   import EmailInput from "../components/email-input.svelte";
   import PasswordInput from "../components/password-input.svelte";
   import {login} from "../auth";
+  import goto from "../goto";
 
   async function fetch_json(url) {
     const response = await fetch(url);
@@ -23,6 +24,7 @@
   async function submit() {
     try {
       await login({email, password});
+      goto("/");
     } catch (err) {
       error = err.message;
     }
