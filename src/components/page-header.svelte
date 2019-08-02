@@ -1,4 +1,6 @@
 <script>
+  import {claims, logout} from "../auth";
+
   let menu_active = false;
 </script>
 
@@ -23,10 +25,14 @@
     </div>
     <div class="navbar-menu {menu_active ? 'is-active' : null}">
       <div class="navbar-end">
-        <a class="navbar-item" href="/login">Log in</a>
-        <div class="navbar-item">
-          <a class="button is-dark is-outlined" href="/signup">Get started</a>
-        </div>
+        {#if $claims != null}
+          <a class="navbar-item" href="/" on:click={logout}>Log out</a>
+        {:else}
+          <a class="navbar-item" href="/login">Log in</a>
+          <div class="navbar-item">
+            <a class="button is-dark is-outlined" href="/signup">Get started</a>
+          </div>
+        {/if}
       </div>
     </div>
   </div>
