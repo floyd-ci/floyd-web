@@ -15,7 +15,7 @@ interface LoginAuth {
   token: string;
 }
 
-const AUTH_URL = "<@FLOYD_AUTH_URL@>";
+const AUTH_URL = process.env.FLOYD_AUTH_URL;
 
 async function post_json(
   url: string,

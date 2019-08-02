@@ -55,11 +55,8 @@ export default {
       ],
     }),
     replace({
-      delimiters: ["<@", "@>"],
-      values: {
-        FLOYD_API_URL: process.env.FLOYD_API_URL,
-        FLOYD_AUTH_URL: process.env.FLOYD_AUTH_URL,
-      },
+      "process.env.FLOYD_API_URL": `"${process.env.FLOYD_API_URL}"`,
+      "process.env.FLOYD_AUTH_URL": `"${process.env.FLOYD_AUTH_URL}"`,
     }),
     resolve({
       browser: true,

@@ -2,19 +2,12 @@
   import AuthDialog from "../components/auth-dialog.svelte";
   import EmailInput from "../components/email-input.svelte";
   import PasswordInput from "../components/password-input.svelte";
+  import {fetch_json} from "../request";
   import {login} from "../auth";
   import goto from "../goto";
 
-  async function fetch_json(url) {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json();
-  }
-
   let promise = fetch_json(
-    "<@FLOYD_API_URL@>/services?select=service_id,service_name,client_id,auth_url,scope&order=service_id",
+    "/services?select=service_id,service_name,client_id,auth_url,scope&order=service_id",
   );
 
   let email = "";
