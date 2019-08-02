@@ -1,16 +1,24 @@
 import {add_auth_header} from "./auth";
 
-interface Page {
-  pagedata: Record<string, any>;
+interface Page<T> {
+  pagedata: T[];
   pagination?: {
     current: number;
     total: number;
   };
 }
 
-const API_URL = "<@FLOYD_API_URL@>";
+const API_URL = process.env.FLOYD_API_URL;
 
-export async function get_object(url: string): Promise<Record<string, any>> {
+export async function fetch_json<T>(url: string): Promise<T> {
+  const response = await fetch(`${API_URL}/${url}`);
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  return response.json();
+}
+
+export async function get_object<T>(url: string): Promise<T> {
   const headers = new Headers({
     Accept: "application/vnd.pgrst.object+json",
   });
@@ -24,11 +32,11 @@ export async function get_object(url: string): Promise<Record<string, any>> {
   return response.json();
 }
 
-export async function get_page(
+export async function get_page<T>(
   url: string,
   page: number,
   per_page: number,
-): Promise<Page> {
+): Promise<Page<T>> {
   const from = (page - 1) * per_page;
   const to = from + per_page - 1;
 

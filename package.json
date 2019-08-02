@@ -23,6 +23,8 @@
     "eslint-plugin-svelte3": "2.7.3",
     "eslint-plugin-unicorn": "10.0.0",
     "jest": "24.8.0",
+    "jest-fetch-mock": "2.1.2",
+    "jest-localstorage-mock": "2.4.0",
     "node-sass": "4.12.0",
     "prettier": "1.18.2",
     "prettier-plugin-svelte": "0.7.0",
