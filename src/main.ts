@@ -17,8 +17,8 @@ const app = new App({
 });
 
 function navigate(): void {
-  const page = select_page(location.pathname);
-  app.$set({page});
+  const page = select_page(location);
+  app.$set(page);
 }
 
 window.addEventListener("click", handle_click);
