@@ -1,4 +1,6 @@
-import "bulma/bulma.sass"; // eslint-disable-line import/no-unassigned-import
+import "bulma/bulma.sass";
+import "svelte";
+
 import App from "./app.svelte";
 import handle_click from "./click";
 import select_page from "./router";
@@ -14,7 +16,7 @@ const app = new App({
   target: document.body,
 });
 
-function navigate() {
+function navigate(): void {
   const page = select_page(location.pathname);
   app.$set({page});
 }
