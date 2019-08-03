@@ -22,7 +22,7 @@ function handle404(req, res, next) {
 }
 
 export default {
-  input: "src/main.js",
+  input: "src/main.ts",
   output: {
     file: "dist/app.js",
     format: "esm",
