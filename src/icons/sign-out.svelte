@@ -1,6 +1,6 @@
 <script>
   import Icon from "../components/icon.svelte";
-  let className;
+  let className = "";
   const d =
     "M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 " +
     "0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 " +
@@ -10,5 +10,7 @@
     "96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z";
   export {className as class};
 </script>
+
+<svelte:options immutable={true} />
 
 <Icon class={className} {d} />
