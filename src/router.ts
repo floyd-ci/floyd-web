@@ -10,6 +10,10 @@ interface Module {
   default: any;
 }
 
+interface Route {
+  module: Module;
+}
+
 interface Page {
   page: any;
 }
@@ -28,7 +32,13 @@ function select_module(path: string): Module {
   }
 }
 
+export function select_route(path: string): Route {
+  const module: Module = select_module(path);
+  return {module};
+}
+
 export default function(location: Location): Page {
-  const {default: page} = select_module(location.pathname);
+  const route = select_route(location.pathname);
+  const page = route.module.default;
   return {page};
 }
