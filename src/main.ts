@@ -16,8 +16,8 @@ const app = new App({
   target: document.body,
 });
 
-function navigate(): void {
-  const page = select_page(location);
+async function navigate(): Promise<void> {
+  const page = await select_page(location);
   app.$set(page);
 }
 
