@@ -1,3 +1,8 @@
+<script context="module">
+  import {preload, service_href} from "./login";
+  export {preload};
+</script>
+
 <script>
   import AuthDialog from "../components/auth-dialog.svelte";
   import EmailInput from "../components/email-input.svelte";
@@ -21,13 +26,6 @@
     } catch (err) {
       error = err.message;
     }
-  }
-
-  function href({service_id, client_id, auth_url, scope}) {
-    const redirect_uri = encodeURIComponent(
-      `https://${location.host}/login/${service_id}`,
-    );
-    return `${auth_url}?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=${scope}&response_type=code&state=87d11950465e5937515c`;
   }
 </script>
 
@@ -74,7 +72,7 @@
   {:then services}
     {#each services as service}
       <div class="field">
-        <a href={href(service)} class="button is-fullwidth">
+        <a href={service_href(service)} class="button is-fullwidth">
           <span>Log in with {service.service_name}</span>
         </a>
       </div>

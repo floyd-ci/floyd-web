@@ -11,8 +11,8 @@ interface LoginCred {
 }
 
 interface LoginAuth {
+  code: string;
   service: string;
-  token: string;
 }
 
 const AUTH_URL = process.env.FLOYD_AUTH_URL;
