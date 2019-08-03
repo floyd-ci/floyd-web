@@ -12,8 +12,7 @@ export async function preload(_, query: URLSearchParams) {
       console.log(err);
       window.alert(err);
     }
-    // this.redirect("/profile");
-    return;
+    history.replaceState(null, "", "/profile");
   }
 
   const linked_accounts = (await get_page(`linked_accounts`, 1, 10)).pagedata;
