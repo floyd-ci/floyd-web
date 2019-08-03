@@ -1,7 +1,13 @@
 <script>
+  import UserIcon from "../icons/user.svelte";
+  import SignOutIcon from "../icons/sign-out.svelte";
+
   import {claims, logout} from "../auth";
+  import md5 from "../md5";
 
   let menu_active = false;
+
+  $: tag = md5(($claims && $claims.email) || "");
 </script>
 
 <nav class="navbar is-light">
@@ -26,7 +32,27 @@
     <div class="navbar-menu {menu_active ? 'is-active' : null}">
       <div class="navbar-end">
         {#if $claims != null}
-          <a class="navbar-item" href="/" on:click={logout}>Log out</a>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a href="/" class="navbar-link">
+              <div class="image is-24x24">
+                <img
+                  alt=""
+                  class="is-rounded"
+                  src="https://gravatar.com/avatar/{tag}?d=mp&s=24&f=y" />
+              </div>
+            </a>
+            <div class="navbar-dropdown is-right">
+              <a class="navbar-item" href="/profile">
+                <UserIcon />
+                <span>Profile</span>
+              </a>
+              <hr class="navbar-divider" />
+              <a class="navbar-item" href="/" on:click={logout}>
+                <SignOutIcon />
+                <span>Log out</span>
+              </a>
+            </div>
+          </div>
         {:else}
           <a class="navbar-item" href="/login">Log in</a>
           <div class="navbar-item">
