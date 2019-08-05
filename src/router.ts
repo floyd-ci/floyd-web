@@ -5,14 +5,15 @@ import * as Login from "./routes/login.svelte";
 import * as NotFound from "./routes/404.svelte";
 import * as Profile from "./routes/profile.svelte";
 import * as SignUp from "./routes/signup.svelte";
+import * as NamespaceIndex from "./routes/[service]/[namespace]/index.svelte";
 
 import {get_page, get_object} from "./request";
 
 type Params = Record<string, string>;
-type Props = Record<string, any>;
+type Props = Record<string, unknown>;
 
 interface Module {
-  default: any;
+  default: unknown;
   preload?: (Params, URLSearchParams) => Promise<Props>;
   dataurl?: (Params, URLSearchParams) => string;
   pagination?: true;
@@ -24,28 +25,59 @@ interface Route {
 }
 
 interface Page {
-  page: any;
+  page: unknown;
   props: Props;
 }
 
-function select_module(path: string): Module {
-  if (path === "/") {
-    return Index;
-  } else if (path === "/login") {
-    return Login;
-  } else if (path === "/profile") {
-    return Profile;
-  } else if (path === "/signup") {
-    return SignUp;
-  } else {
-    return NotFound;
-  }
+interface RoutingTree {
+  readonly [sub: string]: Module | string | RoutingTree;
 }
 
-export function select_route(path: string): Route {
-  const module: Module = select_module(path);
-  const params: Record<string, string> = {};
-  return {module, params};
+const routing_tree: RoutingTree = {
+  "@": Index,
+  ":": {
+    "~": "service",
+    ":": {
+      "~": "namespace",
+      "@": NamespaceIndex,
+    },
+  },
+  login: {"@": Login},
+  profile: {"@": Profile},
+  signup: {"@": SignUp},
+};
+
+export function select_route(rules: RoutingTree, path: string): Route {
+  const params: Params = {};
+  const pieces: string[] = path.split("/").filter(Boolean);
+
+  for (let i = 0; i < pieces.length; ++i) {
+    let piece: string = pieces[i];
+
+    let subRules;
+    if ((subRules = rules[piece] || rules[":"])) {
+      // noop
+    } else if ((subRules = rules["*"])) {
+      piece = pieces.slice(i).join("/");
+      i = pieces.length;
+    } else {
+      return {module: NotFound, params: {}};
+    }
+
+    rules = subRules;
+
+    const param = rules["~"];
+    if (param) {
+      params[param as string] = piece;
+    }
+  }
+
+  const module = rules["@"];
+  if (!module) {
+    return {module: NotFound, params: {}};
+  }
+
+  return {module: module as Module, params};
 }
 
 export async function load_route(
@@ -54,7 +86,7 @@ export async function load_route(
 ): Promise<Page> {
   const {module, params} = route;
   const {default: page, preload, dataurl, pagination} = module;
-  const props: Props = {};
+  const props: Props = params;
 
   if (preload) {
     const preloaded: Props = await preload(params, query);
@@ -76,6 +108,6 @@ export async function load_route(
 }
 
 export default function(location: Location): Promise<Page> {
-  const route = select_route(location.pathname);
+  const route = select_route(routing_tree, location.pathname);
   return load_route(route, new URLSearchParams(location.search));
 }
