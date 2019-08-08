@@ -112,7 +112,7 @@ export async function load_route(
   return {page, props};
 }
 
-export default function(location: Location): Promise<Page> {
+export function select_page(location: Location): Promise<Page> {
   const route = select_route(routing_tree, location.pathname);
   return load_route(route, new URLSearchParams(location.search));
 }

@@ -9,7 +9,7 @@
   import PasswordInput from "../components/password-input.svelte";
   import {fetch_json} from "../request";
   import {login} from "../auth";
-  import goto from "../goto";
+  import {goto} from "../goto";
 
   let promise = fetch_json(
     "/services?select=service_id,service_name,client_id,auth_url,scope&order=service_id",

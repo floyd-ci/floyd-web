@@ -12,6 +12,8 @@ extends:
 overrides:
   - files: "*.config.js"
     env: {node: true}
+    rules:
+      import/no-default-export: off
   - files: "src/**/*"
     env: {browser: true}
   - files: "**/*.svelte"
@@ -20,6 +22,7 @@ plugins:
   - svelte3
 rules:
   "@typescript-eslint/camelcase": off
+  import/no-default-export: error
   unicorn/catch-error-name: [error, {name: "err"}]
   unicorn/prevent-abbreviations: off
 settings:

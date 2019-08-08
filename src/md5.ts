@@ -168,6 +168,6 @@ function hex(x): string {
   return x.map(rhex).join("");
 }
 
-export default function(str: string): string {
+export function md5(str: string): string {
   return hex(md51(str));
 }

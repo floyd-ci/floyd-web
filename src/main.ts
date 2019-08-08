@@ -2,8 +2,8 @@ import "bulma/bulma.sass";
 import "svelte";
 
 import App from "./app.svelte";
-import handle_click from "./click";
-import select_page from "./router";
+import {handle_click} from "./click";
+import {select_page} from "./router";
 
 // In case we have to deliver the 404.html
 const redirect_href = sessionStorage.getItem("redirect_href");
