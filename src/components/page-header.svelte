@@ -3,7 +3,7 @@
   import SignOutIcon from "../icons/sign-out.svelte";
 
   import {claims, logout} from "../auth";
-  import md5 from "../md5";
+  import {md5} from "../md5";
 
   let menu_active = false;
 

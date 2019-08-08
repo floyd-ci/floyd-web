@@ -1,6 +1,6 @@
 import {link_service, unlink_service} from "../auth";
 import {get_page} from "../request";
-import goto from "../goto";
+import {goto} from "../goto";
 
 export async function preload(_, query: URLSearchParams) {
   if (query.has("link") && query.has("code")) {

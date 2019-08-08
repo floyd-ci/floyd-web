@@ -1,5 +1,5 @@
 import {login} from "../auth";
-import goto from "../goto";
+import {goto} from "../goto";
 
 export async function preload(_, query: URLSearchParams) {
   if (query.has("service") && query.has("code")) {
