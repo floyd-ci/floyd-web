@@ -11,7 +11,7 @@
   import {login} from "../auth";
   import {goto} from "../goto";
 
-  let promise = fetch_json(
+  const promise = fetch_json(
     "/services?select=service_id,service_name,client_id,auth_url,scope&order=service_id",
   );
 
