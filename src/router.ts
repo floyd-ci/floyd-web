@@ -6,7 +6,9 @@ import * as NotFound from "./routes/404.svelte";
 import * as Profile from "./routes/profile.svelte";
 import * as SignUp from "./routes/signup.svelte";
 import * as NamespaceIndex from "./routes/[service]/[namespace]/index.svelte";
+import ProjectHeader from "./routes/[service]/[namespace]/[project]/_header.svelte";
 import * as ProjectIndex from "./routes/[service]/[namespace]/[project]/index.svelte";
+import * as ProjectSites from "./routes/[service]/[namespace]/[project]/sites.svelte";
 import * as SitesIndex from "./routes/sites/index.svelte";
 import * as Site from "./routes/sites/[site].svelte";
 import * as Job from "./routes/[service]/[namespace]/[project]/jobs/[job]/index.svelte";
@@ -24,18 +26,24 @@ interface Module {
   pagination?: true;
 }
 
-interface Route {
-  module: Module;
-  params: Params;
-}
-
-interface Page {
-  page: unknown;
+interface Component {
+  component: unknown;
   props: Props;
 }
 
+interface Route {
+  module: Module;
+  params: Params;
+  headers: Array<Component>;
+}
+
+interface Page {
+  headers: Array<Component>;
+  page: Component;
+}
+
 interface RoutingTree {
-  readonly [sub: string]: Module | string | RoutingTree;
+  readonly [sub: string]: unknown | Module | string | RoutingTree;
 }
 
 const routing_tree: RoutingTree = {
@@ -47,6 +55,7 @@ const routing_tree: RoutingTree = {
       "@": NamespaceIndex,
       ":": {
         "~": "project",
+        "/": ProjectHeader,
         "@": ProjectIndex,
         jobs: {
           ":": {
@@ -55,6 +64,7 @@ const routing_tree: RoutingTree = {
             configure: {"@": Configure},
           },
         },
+        sites: {"@": ProjectSites},
       },
     },
   },
@@ -72,8 +82,9 @@ const routing_tree: RoutingTree = {
 
 export function select_route(rules: RoutingTree, path: string): Route {
   const params: Params = {};
-  const pieces: string[] = path.split("/").filter(Boolean);
+  const headers: Array<Component> = [];
 
+  const pieces: string[] = path.split("/").filter(Boolean);
   for (let i = 0; i < pieces.length; ++i) {
     let piece: string = pieces[i];
 
@@ -84,7 +95,7 @@ export function select_route(rules: RoutingTree, path: string): Route {
       piece = pieces.slice(i).join("/");
       i = pieces.length;
     } else {
-      return {module: NotFound, params: {}};
+      return {module: NotFound, params: {}, headers: []};
     }
 
     rules = subRules;
@@ -93,22 +104,28 @@ export function select_route(rules: RoutingTree, path: string): Route {
     if (param) {
       params[param as string] = piece;
     }
+
+    const head = rules["/"];
+    if (head) {
+      const props = Object.assign({segment: pieces[i + 1]}, params);
+      headers.push({component: head, props});
+    }
   }
 
   const module = rules["@"];
   if (!module) {
-    return {module: NotFound, params: {}};
+    return {module: NotFound, params: {}, headers: []};
   }
 
-  return {module: module as Module, params};
+  return {module: module as Module, params, headers};
 }
 
 export async function load_route(
   route: Route,
   query: URLSearchParams,
 ): Promise<Page> {
-  const {module, params} = route;
-  const {default: page, preload, dataurl, pagination} = module;
+  const {module, params, headers} = route;
+  const {default: component, preload, dataurl, pagination} = module;
   const props: Props = params;
 
   if (preload) {
@@ -127,7 +144,7 @@ export async function load_route(
     }
   }
 
-  return {page, props};
+  return {headers, page: {component, props}};
 }
 
 export function select_page(location: Location): Promise<Page> {
