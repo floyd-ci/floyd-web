@@ -9,6 +9,8 @@ import * as NamespaceIndex from "./routes/[service]/[namespace]/index.svelte";
 import * as ProjectIndex from "./routes/[service]/[namespace]/[project]/index.svelte";
 import * as SitesIndex from "./routes/sites/index.svelte";
 import * as Site from "./routes/sites/[site].svelte";
+import * as Job from "./routes/[service]/[namespace]/[project]/jobs/[job]/index.svelte";
+import * as Configure from "./routes/[service]/[namespace]/[project]/jobs/[job]/configure.svelte";
 
 import {get_page, get_object} from "./request";
 
@@ -46,6 +48,13 @@ const routing_tree: RoutingTree = {
       ":": {
         "~": "project",
         "@": ProjectIndex,
+        jobs: {
+          ":": {
+            "~": "job",
+            "@": Job,
+            configure: {"@": Configure},
+          },
+        },
       },
     },
   },
