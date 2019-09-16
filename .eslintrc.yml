@@ -18,6 +18,8 @@ overrides:
     env: {browser: true}
   - files: "**/*.svelte"
     processor: svelte3/svelte3
+    rules:
+      unicorn/filename-case: off
 plugins:
   - svelte3
 rules:
