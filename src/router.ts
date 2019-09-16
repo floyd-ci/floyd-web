@@ -7,6 +7,8 @@ import * as Profile from "./routes/profile.svelte";
 import * as SignUp from "./routes/signup.svelte";
 import * as NamespaceIndex from "./routes/[service]/[namespace]/index.svelte";
 import * as ProjectIndex from "./routes/[service]/[namespace]/[project]/index.svelte";
+import * as SitesIndex from "./routes/sites/index.svelte";
+import * as Site from "./routes/sites/[site].svelte";
 
 import {get_page, get_object} from "./request";
 
@@ -45,6 +47,13 @@ const routing_tree: RoutingTree = {
         "~": "project",
         "@": ProjectIndex,
       },
+    },
+  },
+  sites: {
+    "@": SitesIndex,
+    ":": {
+      "~": "site",
+      "@": Site,
     },
   },
   login: {"@": Login},
