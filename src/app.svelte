@@ -1,6 +1,7 @@
 <script>
   import PageHeader from "./components/page-header.svelte";
   import PageFooter from "./components/page-footer.svelte";
+  import Pagination from "./components/pagination.svelte";
 
   export let page = {props: {}};
   export let headers = [];
@@ -17,5 +18,15 @@
     <svelte:component this={page.component} {...page.props} />
   </div>
 </section>
+
+{#if page.props.pagination}
+  <section class="section">
+    <div class="container">
+      <Pagination
+        current={page.props.pagination.current}
+        total={page.props.pagination.total} />
+    </div>
+  </section>
+{/if}
 
 <PageFooter />
