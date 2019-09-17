@@ -12,38 +12,32 @@
   export let pagedata = [];
 </script>
 
-<section class="section">
-  <div class="container">
-    {#each pagedata as elem}
-      <div class="panel">
-        <h1 class="panel-heading">{elem.name}</h1>
-        <div class="panel-block">
+{#each pagedata as elem}
+  <div class="panel">
+    <h1 class="panel-heading">{elem.name}</h1>
+    <div class="panel-block">
+      <p>
+        command_line:
+        <code>{elem.command_line}</code>
+      </p>
+    </div>
+    <div class="panel-block">
+      <p>working_directory: {elem.working_directory}</p>
+    </div>
+    {#each elem.measurements as {name, value}}
+      <div class="panel-block">
+        {#if name === 'SourceFile'}
           <p>
-            command_line:
-            <code>{elem.command_line}</code>
+            {name}:
+            <a href="/{service}/{namespace}/{project}/tree/{value}">{value}</a>
           </p>
-        </div>
-        <div class="panel-block">
-          <p>working_directory: {elem.working_directory}</p>
-        </div>
-        {#each elem.measurements as {name, value}}
-          <div class="panel-block">
-            {#if name === 'SourceFile'}
-              <p>
-                {name}:
-                <a href="/{service}/{namespace}/{project}/tree/{value}">
-                  {value}
-                </a>
-              </p>
-            {:else}
-              <p>{name}: {value}</p>
-            {/if}
-          </div>
-        {/each}
-        <pre class="panel-block">
-          <code>{elem.output}</code>
-        </pre>
+        {:else}
+          <p>{name}: {value}</p>
+        {/if}
       </div>
     {/each}
+    <pre class="panel-block">
+      <code>{elem.output}</code>
+    </pre>
   </div>
-</section>
+{/each}
