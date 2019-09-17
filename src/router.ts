@@ -13,6 +13,7 @@ import * as ProjectSites from "./routes/[service]/[namespace]/[project]/sites.sv
 import * as ProjectStats from "./routes/[service]/[namespace]/[project]/stats.svelte";
 import * as ProjectTestIndex from "./routes/[service]/[namespace]/[project]/tests/index.svelte";
 import * as ProjectTest from "./routes/[service]/[namespace]/[project]/tests/[test].svelte";
+import * as Tree from "./routes/[service]/[namespace]/[project]/tree/[...path].svelte";
 import * as SitesIndex from "./routes/sites/index.svelte";
 import * as Site from "./routes/sites/[site].svelte";
 import JobHeader from "./routes/[service]/[namespace]/[project]/jobs/[job]/_header.svelte";
@@ -95,6 +96,12 @@ const routing_tree: RoutingTree = {
           ":": {
             "~": "test",
             "@": ProjectTest,
+          },
+        },
+        tree: {
+          "*": {
+            "~": "path",
+            "@": Tree,
           },
         },
       },
