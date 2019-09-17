@@ -17,27 +17,23 @@
     ((100 * tested) / (tested + untested)).toFixed(2);
 </script>
 
-<section class="section">
-  <div class="container">
-    <table class="table is-striped is-hoverable is-fullwidth">
-      <thead>
-        <tr>
-          <th>File Name</th>
-          <th>Line coverage</th>
-          <th>Lines covered</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each pagedata as {file_path, lines_tested, lines_untested}}
-          <tr>
-            <td>
-              <a href="{root}/{file_path}">{file_path}</a>
-            </td>
-            <td>{coverage_percent(lines_tested, lines_untested)} %</td>
-            <td>{lines_tested} / {lines_tested + lines_untested}</td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  </div>
-</section>
+<table class="table is-striped is-hoverable is-fullwidth">
+  <thead>
+    <tr>
+      <th>File Name</th>
+      <th>Line coverage</th>
+      <th>Lines covered</th>
+    </tr>
+  </thead>
+  <tbody>
+    {#each pagedata as {file_path, lines_tested, lines_untested}}
+      <tr>
+        <td>
+          <a href="{root}/{file_path}">{file_path}</a>
+        </td>
+        <td>{coverage_percent(lines_tested, lines_untested)} %</td>
+        <td>{lines_tested} / {lines_tested + lines_untested}</td>
+      </tr>
+    {/each}
+  </tbody>
+</table>
