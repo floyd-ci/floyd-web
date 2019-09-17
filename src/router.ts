@@ -11,8 +11,12 @@ import * as ProjectIndex from "./routes/[service]/[namespace]/[project]/index.sv
 import * as ProjectSites from "./routes/[service]/[namespace]/[project]/sites.svelte";
 import * as SitesIndex from "./routes/sites/index.svelte";
 import * as Site from "./routes/sites/[site].svelte";
+import JobHeader from "./routes/[service]/[namespace]/[project]/jobs/[job]/_header.svelte";
 import * as Job from "./routes/[service]/[namespace]/[project]/jobs/[job]/index.svelte";
+import * as Update from "./routes/[service]/[namespace]/[project]/jobs/[job]/update.svelte";
 import * as Configure from "./routes/[service]/[namespace]/[project]/jobs/[job]/configure.svelte";
+import * as Build from "./routes/[service]/[namespace]/[project]/jobs/[job]/build.svelte";
+import * as Issues from "./routes/[service]/[namespace]/[project]/jobs/[job]/issues.svelte";
 
 import {get_page, get_object} from "./request";
 
@@ -60,8 +64,12 @@ const routing_tree: RoutingTree = {
         jobs: {
           ":": {
             "~": "job",
+            "/": JobHeader,
             "@": Job,
+            update: {"@": Update},
             configure: {"@": Configure},
+            build: {"@": Build},
+            issues: {"@": Issues},
           },
         },
         sites: {"@": ProjectSites},
