@@ -1,4 +1,7 @@
 <script>
+  import PaginationEllipsis from "./pagination-ellipsis.svelte";
+  import PaginationLink from "./pagination-link.svelte";
+
   export let current;
   export let total;
 
@@ -33,19 +36,13 @@
   <ul class="pagination-list">
 
     {#if first > 1}
-      <li>
-        <a class="pagination-link" href={href(1)}>1</a>
-      </li>
+      <PaginationLink page="1" />
     {/if}
 
     {#if first === 3}
-      <li>
-        <a class="pagination-link" href={href(2)}>2</a>
-      </li>
+      <PaginationLink page="2" />
     {:else if first > 3}
-      <li>
-        <span class="pagination-ellipsis">...</span>
-      </li>
+      <PaginationEllipsis />
     {/if}
 
     <!-- for (var i = first; i <= last; ++i) -->
@@ -55,24 +52,18 @@
           <span class="pagination-link is-current">{i}</span>
         </li>
       {:else}
-        <li>
-          <a class="pagination-link" href={href(i)}>{i}</a>
-        </li>
+        <PaginationLink page={i} />
       {/if}
     {/each}
 
-    <li>
-      {#if last === total - 2}
-        <a class="pagination-link" href={href(total - 1)}>{total - 1}</a>
-      {:else if last < total - 2}
-        <span class="pagination-ellipsis">...</span>
-      {/if}
-    </li>
+    {#if last === total - 2}
+      <PaginationLink page={total - 1} />
+    {:else if last < total - 2}
+      <PaginationEllipsis />
+    {/if}
 
     {#if last < total}
-      <li>
-        <a class="pagination-link" href={href(total)}>{total}</a>
-      </li>
+      <PaginationLink page={total} />
     {/if}
 
   </ul>
