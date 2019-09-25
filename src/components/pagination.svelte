@@ -12,7 +12,7 @@
     return "?" + query.toString();
   };
 
-  // TODO: Consider rewriting this in pure JS, inherit from SvelteComponent.
+  // TODO [>=1.0.0]: Consider rewriting this in pure JS, inherit from SvelteComponent.
 
   $: first = Math.max(1, Math.min(+current - 2, +total - 6));
   $: last = Math.min(total, Math.max(+current + 2, 1 + 6));
