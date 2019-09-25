@@ -8,7 +8,12 @@ import * as SignUp from "./routes/signup.svelte";
 import * as NamespaceIndex from "./routes/[service]/[namespace]/index.svelte";
 import ProjectHeader from "./routes/[service]/[namespace]/[project]/_header.svelte";
 import * as ProjectIndex from "./routes/[service]/[namespace]/[project]/index.svelte";
+import * as ProjectGraphs from "./routes/[service]/[namespace]/[project]/graphs.svelte";
 import * as ProjectSites from "./routes/[service]/[namespace]/[project]/sites.svelte";
+import * as ProjectStats from "./routes/[service]/[namespace]/[project]/stats.svelte";
+import * as ProjectTestIndex from "./routes/[service]/[namespace]/[project]/tests/index.svelte";
+import * as ProjectTest from "./routes/[service]/[namespace]/[project]/tests/[test].svelte";
+import * as Tree from "./routes/[service]/[namespace]/[project]/tree/[...path].svelte";
 import * as SitesIndex from "./routes/sites/index.svelte";
 import * as Site from "./routes/sites/[site].svelte";
 import JobHeader from "./routes/[service]/[namespace]/[project]/jobs/[job]/_header.svelte";
@@ -17,6 +22,9 @@ import * as Update from "./routes/[service]/[namespace]/[project]/jobs/[job]/upd
 import * as Configure from "./routes/[service]/[namespace]/[project]/jobs/[job]/configure.svelte";
 import * as Build from "./routes/[service]/[namespace]/[project]/jobs/[job]/build.svelte";
 import * as Issues from "./routes/[service]/[namespace]/[project]/jobs/[job]/issues.svelte";
+import * as Coverage from "./routes/[service]/[namespace]/[project]/jobs/[job]/coverage.svelte";
+import * as TestIndex from "./routes/[service]/[namespace]/[project]/jobs/[job]/tests/index.svelte";
+import * as Test from "./routes/[service]/[namespace]/[project]/jobs/[job]/tests/[test].svelte";
 
 import {get_page, get_object} from "./request";
 
@@ -61,6 +69,7 @@ const routing_tree: RoutingTree = {
         "~": "project",
         "/": ProjectHeader,
         "@": ProjectIndex,
+        graphs: {"@": ProjectGraphs},
         jobs: {
           ":": {
             "~": "job",
@@ -70,9 +79,31 @@ const routing_tree: RoutingTree = {
             configure: {"@": Configure},
             build: {"@": Build},
             issues: {"@": Issues},
+            coverage: {"@": Coverage},
+            tests: {
+              "@": TestIndex,
+              ":": {
+                "~": "test",
+                "@": Test,
+              },
+            },
           },
         },
         sites: {"@": ProjectSites},
+        stats: {"@": ProjectStats},
+        tests: {
+          "@": ProjectTestIndex,
+          ":": {
+            "~": "test",
+            "@": ProjectTest,
+          },
+        },
+        tree: {
+          "*": {
+            "~": "path",
+            "@": Tree,
+          },
+        },
       },
     },
   },

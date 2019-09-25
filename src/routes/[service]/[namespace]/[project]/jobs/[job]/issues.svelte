@@ -14,20 +14,14 @@
   $: slug = `${service}/${namespace}/${project}`;
 </script>
 
-<section class="section">
-  <div class="container">
-    {#each pagedata as {file_path, line_nr, type, message, option}}
-      <div class="panel">
-        <h1 class="panel-heading">{type} ({option})</h1>
-        <div class="panel-block">
-          <a href="/{slug}/tree/{file_path}#L{line_nr}">
-            {file_path}:{line_nr}
-          </a>
-        </div>
-        <pre class="panel-block">
-          <code>{message}</code>
-        </pre>
-      </div>
-    {/each}
+{#each pagedata as {file_path, line_nr, type, message, option}}
+  <div class="panel">
+    <h1 class="panel-heading">{type} ({option})</h1>
+    <div class="panel-block">
+      <a href="/{slug}/tree/{file_path}#L{line_nr}">{file_path}:{line_nr}</a>
+    </div>
+    <pre class="panel-block">
+      <code>{message}</code>
+    </pre>
   </div>
-</section>
+{/each}

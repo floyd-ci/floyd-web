@@ -135,9 +135,9 @@ function md51(s: string): number[] {
   const state = [1732584193, -271733879, -1732584194, 271733878];
   let i: number;
   for (i = 64; i <= s.length; i += 64) {
-    md5cycle(state, md5blk(s.substring(i - 64, i)));
+    md5cycle(state, md5blk(s.slice(i - 64, i)));
   }
-  s = s.substring(i - 64);
+  s = s.slice(i - 64);
   const tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (i = 0; i < s.length; i++) {
     tail[i >> 2] |= s.charCodeAt(i) << (i % 4 << 3);

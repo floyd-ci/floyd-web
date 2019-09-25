@@ -1,6 +1,6 @@
 <script context="module">
-  export const dataurl = ({job}) =>
-    `commands?job_id=eq.${job}&type=eq.Configure&select=*,measurements(*)`;
+  export const dataurl = ({test}) =>
+    `commands?command_id=eq.${test}&select=*,measurements(*)`;
 </script>
 
 <script>
@@ -22,9 +22,9 @@
   <div class="panel-block">
     <p>working_directory: {working_directory}</p>
   </div>
-  {#each measurements as entry}
+  {#each measurements as {name, value}}
     <div class="panel-block">
-      <p>{entry.name}: {entry.value}</p>
+      <p>{name}: {value}</p>
     </div>
   {/each}
   <pre class="panel-block">

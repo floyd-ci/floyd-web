@@ -37,7 +37,7 @@ export function link_href({service_id, client_id, auth_url, scope}): string {
 export async function unlink(service): Promise<void> {
   try {
     await unlink_service(service);
-    // TODO: remove nickname from service and redraw, without reroute.
+    // TODO [>=1.0.0]: remove nickname from service and redraw, without reroute.
     goto("/");
   } catch (err) {
     console.log(err);

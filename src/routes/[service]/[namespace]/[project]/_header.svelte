@@ -38,7 +38,7 @@
             <a href="{project_slug}/tests">Tests</a>
           </li>
           <li class={segment === 'tree' ? 'is-active' : ''}>
-            <a href="{project_slug}/tree">Tree</a>
+            <a href="{project_slug}/tree/">Tree</a>
           </li>
         </ul>
       </nav>
