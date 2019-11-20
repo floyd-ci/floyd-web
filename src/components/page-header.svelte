@@ -2,7 +2,7 @@
   import UserIcon from "../icons/user.svelte";
   import SignOutIcon from "../icons/sign-out.svelte";
 
-  import {claims, logout} from "../auth";
+  import {claims, logout, login_url} from "../auth";
   import {md5} from "../md5";
 
   let menu_active = false;
@@ -54,9 +54,10 @@
             </div>
           </div>
         {:else}
-          <a class="navbar-item" href="/login">Log in</a>
           <div class="navbar-item">
-            <a class="button is-dark is-outlined" href="/signup">Get started</a>
+            <a class="button is-dark is-outlined" href={login_url}>
+              Log in with GitHub
+            </a>
           </div>
         {/if}
       </div>
