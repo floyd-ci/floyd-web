@@ -5,31 +5,7 @@ interface Claims {
   role: string;
 }
 
-interface LoginCred {
-  email: string;
-  password: string;
-}
-
-interface LoginAuth {
-  code: string;
-  service: string;
-}
-
 const AUTH_URL = process.env.FLOYD_AUTH_URL;
-
-async function post_json(
-  url: string,
-  data: Record<string, string>,
-): Promise<void> {
-  const response = await fetch(url, {
-    method: "POST",
-    credentials: "include",
-    body: JSON.stringify(data),
-  });
-  if (!response.ok) {
-    throw await response.json();
-  }
-}
 
 function decodeToken(str: string): Claims | null {
   const a = str.split(".");
@@ -75,11 +51,11 @@ export async function add_auth_header(headers: Headers): Promise<void> {
   }
 }
 
-export async function login(data: LoginCred | LoginAuth): Promise<void> {
+export async function login(code: string, service: string): Promise<void> {
   const response = await fetch(`${AUTH_URL}/login`, {
     method: "POST",
     credentials: "include",
-    body: JSON.stringify(data),
+    body: JSON.stringify({code, service}),
   });
   if (!response.ok) {
     throw await response.json();
@@ -95,28 +71,9 @@ export function logout(): void {
   clearToken();
 }
 
-// given email, request a token
-export function request_signup(email: string): Promise<void> {
-  return post_json(`${AUTH_URL}/signup`, {email});
-}
-
-// given token and password, create account, (get auth token?)
-export function signup(token: string, password: string): Promise<void> {
-  return post_json(`${AUTH_URL}/register`, {token, password});
-}
-
-export function forgot(email: string): Promise<void> {
-  return post_json(`${AUTH_URL}/forgot`, {email});
-}
-
-export function pwreset(token: string, password: string): Promise<void> {
-  return post_json(`${AUTH_URL}/reset`, {token, password});
-}
-
-export function link_service(service: string, code: string): Promise<void> {
-  return post_json(`${AUTH_URL}/link`, {code, service});
-}
-
-export function unlink_service(service: string): Promise<void> {
-  return post_json(`${AUTH_URL}/unlink`, {service});
-}
+export const login_url = (function() {
+  const redirect_uri = encodeURIComponent(
+    `${location.protocol}//${location.host}/login`,
+  );
+  return `${AUTH_URL}/redirect?redirect_uri=${redirect_uri}`;
+})();

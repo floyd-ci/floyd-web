@@ -4,7 +4,6 @@ import * as Index from "./routes/index.svelte";
 import * as Login from "./routes/login.svelte";
 import * as NotFound from "./routes/404.svelte";
 import * as Profile from "./routes/profile.svelte";
-import * as SignUp from "./routes/signup.svelte";
 import * as NamespaceIndex from "./routes/[service]/[namespace]/index.svelte";
 import ProjectHeader from "./routes/[service]/[namespace]/[project]/_header.svelte";
 import * as ProjectIndex from "./routes/[service]/[namespace]/[project]/index.svelte";
@@ -116,7 +115,6 @@ const routing_tree: RoutingTree = {
   },
   login: {"@": Login},
   profile: {"@": Profile},
-  signup: {"@": SignUp},
 };
 
 export function select_route(rules: RoutingTree, path: string): Route {
