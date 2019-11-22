@@ -1,6 +1,6 @@
 <script context="module">
-  import {fetch_json} from "../../../../../request.ts";
-  import {get_file} from "../../../../../service/github.js";
+  import {fetch_json} from "../../../../request.ts";
+  import {get_file} from "../../../../service/github.js";
 
   const filterCov = n => (n === -1 ? "" : n);
 
@@ -20,7 +20,7 @@
     };
   }
 
-  export function preload({service, namespace, project, path}) {
+  export function preload({namespace, project, path}) {
     const content = get_file(namespace, project, "", path);
     const coverage = fetch_json(`coverage?file_path=eq.${path}`);
     const diagnostics = fetch_json(`diagnostics?file_path=eq.${path}`);

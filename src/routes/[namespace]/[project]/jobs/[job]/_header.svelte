@@ -1,12 +1,11 @@
 <script>
-  export let service;
   export let namespace;
   export let project;
   export let job;
 
   export let segment;
 
-  $: slug = `/${service}/${namespace}/${project}/jobs/${job}`;
+  $: slug = `/${namespace}/${project}/jobs/${job}`;
   $: active = value => (segment === value ? "is-active" : null);
 </script>
 

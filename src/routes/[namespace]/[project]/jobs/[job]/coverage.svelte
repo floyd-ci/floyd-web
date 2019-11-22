@@ -5,13 +5,12 @@
 </script>
 
 <script>
-  export let service;
   export let namespace;
   export let project;
 
   export let pagedata = [];
 
-  $: root = `/${service}/${namespace}/${project}/tree`;
+  $: root = `/${namespace}/${project}/tree`;
 
   const coverage_percent = (tested, untested) =>
     ((100 * tested) / (tested + untested)).toFixed(2);
