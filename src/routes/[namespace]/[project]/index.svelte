@@ -1,19 +1,18 @@
 <script context="module">
-  export const dataurl = ({service, namespace, project}) =>
-    `jobs?project_slug=eq.${service}/${namespace}/${project}` +
+  export const dataurl = ({namespace, project}) =>
+    `jobs?project_slug=eq.${namespace}/${project}` +
     `&select=*,configure_warnings,configure_errors,build_warnings,build_errors,tests_notrun,tests_passed,tests_failed,site:sites(site_id,name)` +
     `&order=submit_time.desc`;
   export const pagination = true;
 </script>
 
 <script>
-  export let service;
   export let namespace;
   export let project;
 
   export let pagedata = [];
 
-  $: jobs = `/${service}/${namespace}/${project}/jobs`;
+  $: jobs = `/${namespace}/${project}/jobs`;
 </script>
 
 <table class="table is-bordered is-striped is-hoverable is-fullwidth">

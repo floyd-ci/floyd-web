@@ -5,7 +5,6 @@
 </script>
 
 <script>
-  export let service;
   export let namespace;
   export let project;
 
@@ -29,7 +28,7 @@
         {#if name === 'SourceFile'}
           <p>
             {name}:
-            <a href="/{service}/{namespace}/{project}/tree/{value}">{value}</a>
+            <a href="/{namespace}/{project}/tree/{value}">{value}</a>
           </p>
         {:else}
           <p>{name}: {value}</p>

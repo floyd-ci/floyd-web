@@ -5,13 +5,12 @@
 </script>
 
 <script>
-  export let service;
   export let namespace;
   export let project;
 
   export let pagedata = [];
 
-  $: slug = `${service}/${namespace}/${project}`;
+  $: slug = `${namespace}/${project}`;
 </script>
 
 {#each pagedata as {file_path, line_nr, type, message, option}}

@@ -1,18 +1,16 @@
 <script>
-  export let service;
   export let namespace;
   export let project;
   export let segment;
 
-  $: project_slug = `/${service}/${namespace}/${project}`;
+  $: project_slug = `/${namespace}/${project}`;
 </script>
 
 <div class="hero is-small is-info is-bold">
   <div class="hero-body">
     <div class="container">
       <h1 class="title">
-        <span>{service}/</span>
-        <a href="/{service}/{namespace}">{namespace}</a>
+        <a href="/{namespace}">{namespace}</a>
         <span>/</span>
         <a href={project_slug}>{project}</a>
       </h1>

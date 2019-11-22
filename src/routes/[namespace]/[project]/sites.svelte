@@ -1,7 +1,7 @@
 <script context="module">
-  export const dataurl = ({service, namespace, project}) =>
+  export const dataurl = ({namespace, project}) =>
     `rpc/site_project_stats` +
-    `?project_slug=eq.${service}/${namespace}/${project}` +
+    `?project_slug=eq.${namespace}/${project}` +
     "&select=number_of_jobs,site:sites(name,os_name,logical_cpus,clock_frequency)";
   export const pagination = true;
 </script>

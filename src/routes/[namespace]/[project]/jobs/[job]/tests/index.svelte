@@ -14,14 +14,13 @@
 </script>
 
 <script>
-  export let service;
   export let namespace;
   export let project;
   export let job;
 
   export let pagedata = [];
 
-  $: href = id => `/${service}/${namespace}/${project}/jobs/${job}/tests/${id}`;
+  $: href = id => `/${namespace}/${project}/jobs/${job}/tests/${id}`;
 </script>
 
 <!-- show Test AND DynamicAnalysis -->
