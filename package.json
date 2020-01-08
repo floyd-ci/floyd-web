@@ -28,7 +28,7 @@
     "node-sass": "4.13.0",
     "prettier": "1.19.1",
     "prettier-plugin-svelte": "0.7.0",
-    "rollup": "1.27.11",
+    "rollup": "1.29.0",
     "rollup-plugin-browsersync": "1.1.0",
     "rollup-plugin-copy": "3.1.0",
     "rollup-plugin-node-resolve": "5.2.0",
