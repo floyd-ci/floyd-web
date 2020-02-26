@@ -1,5 +1,3 @@
-import {goto} from "./goto";
-
 function find_anchor(target: EventTarget): HTMLAnchorElement | null {
   let node = target instanceof Node ? (target as Node) : null;
   while (node && node.nodeName.toUpperCase() !== "A") {
@@ -19,5 +17,8 @@ export function handle_click(event: MouseEvent): void {
   }
 
   event.preventDefault();
-  goto(a.href);
+
+  const {href} = a;
+  history.pushState(null, "", href);
+  window.dispatchEvent(new CustomEvent("url-change", {detail: {href}}));
 }
