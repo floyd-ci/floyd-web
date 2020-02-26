@@ -1,7 +1,6 @@
 import "svelte";
 
 import * as Index from "./routes/index.svelte";
-import * as Login from "./routes/login.svelte";
 import * as NotFound from "./routes/404.svelte";
 import * as Profile from "./routes/profile.svelte";
 import * as NamespaceIndex from "./routes/[namespace]/index.svelte";
@@ -110,7 +109,6 @@ const routing_tree: RoutingTree = {
       "@": Site,
     },
   },
-  login: {"@": Login},
   profile: {"@": Profile},
 };
 

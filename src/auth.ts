@@ -51,18 +51,6 @@ export async function add_auth_header(headers: Headers): Promise<void> {
   }
 }
 
-export async function login(code: string, service: string): Promise<void> {
-  const response = await fetch(`${AUTH_URL}/login`, {
-    method: "POST",
-    credentials: "include",
-    body: JSON.stringify({code, service}),
-  });
-  if (!response.ok) {
-    throw await response.json();
-  }
-  await renewToken();
-}
-
 export function logout(): void {
   fetch(`${AUTH_URL}/logout`, {
     method: "POST",
@@ -71,9 +59,4 @@ export function logout(): void {
   clearToken();
 }
 
-export const login_url = (function() {
-  const redirect_uri = encodeURIComponent(
-    `${location.protocol}//${location.host}/login`,
-  );
-  return `${AUTH_URL}/redirect?redirect_uri=${redirect_uri}`;
-})();
+export const login_url = `${AUTH_URL}/login/`;
