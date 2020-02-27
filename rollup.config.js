@@ -3,11 +3,11 @@ import browsersync from "rollup-plugin-browsersync";
 import copy from "rollup-plugin-copy";
 import postcss from "rollup-plugin-postcss";
 import purgecss from "@fullhuman/postcss-purgecss";
-import replace from "rollup-plugin-replace";
-import resolve from "rollup-plugin-node-resolve";
+import replace from "@rollup/plugin-replace";
+import resolve from "@rollup/plugin-node-resolve";
 import svelte from "rollup-plugin-svelte";
 import {terser} from "rollup-plugin-terser";
-import typescript from "rollup-plugin-typescript";
+import typescript from "@rollup/plugin-typescript";
 
 const production = !process.env.ROLLUP_WATCH;
 
