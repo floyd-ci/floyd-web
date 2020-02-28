@@ -40,7 +40,7 @@
     "svelte": "3.19.1",
     "ts-jest": "25.2.1",
     "tslib": "1.11.0",
-    "typescript": "3.8.2"
+    "typescript": "3.8.3"
   },
   "scripts": {
     "prebuild": "rm -rf dist",
