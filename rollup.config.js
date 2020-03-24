@@ -5,9 +5,9 @@ import postcss from "rollup-plugin-postcss";
 import purgecss from "@fullhuman/postcss-purgecss";
 import replace from "@rollup/plugin-replace";
 import resolve from "@rollup/plugin-node-resolve";
+import sucrase from "@rollup/plugin-sucrase";
 import svelte from "rollup-plugin-svelte";
 import {terser} from "rollup-plugin-terser";
-import typescript from "@rollup/plugin-typescript";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -65,7 +65,11 @@ export default {
       dev: !production,
       emitCss: true,
     }),
-    typescript({target: "ES2019"}),
+    sucrase({
+      exclude: ["node_modules/**"],
+      production,
+      transforms: ["typescript"],
+    }),
     production &&
       terser({
         module: true,
