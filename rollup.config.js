@@ -1,4 +1,6 @@
 import * as fs from "fs";
+import * as path from "path";
+
 import browsersync from "rollup-plugin-browsersync";
 import copy from "rollup-plugin-copy";
 import postcss from "rollup-plugin-postcss";
@@ -19,6 +21,71 @@ function handle404(req, res, next) {
   }
 
   return next();
+}
+
+function fromEntries(entries) {
+  return [...entries].reduce((obj, [key, val]) => {
+    obj[key] = val;
+    return obj;
+  }, {});
+}
+
+function mkRoutes(cwd) {
+  return fromEntries(
+    fs
+      .readdirSync(cwd)
+      .map(item => {
+        const resolved = path.join(cwd, item);
+        const is_dir = fs.statSync(resolved).isDirectory();
+        const ext = path.extname(item);
+        const name = path.basename(item, ext);
+
+        if (!is_dir && ext != ".svelte") {
+          return;
+        }
+
+        let key = name == "index" ? "@" : name == "_header" ? "/" : name;
+
+        const value = is_dir
+          ? mkRoutes(resolved)
+          : name == "index" || name == "_header"
+          ? resolved
+          : {"@": resolved};
+
+        const match = /^\[(\.{3})?([^\]]+)]$/.exec(name);
+        if (match) {
+          key = match[1] ? "*" : ":";
+          value["~"] = match[2];
+        }
+
+        return [key, value];
+      })
+      .filter(Boolean),
+  );
+}
+
+function routes(cwd) {
+  return {
+    name: "routes",
+    resolveId: id => (id === "@routes@" ? "\0routes" : null),
+    load(id) {
+      if (id == "\0routes") {
+        let id = 0;
+        let imports = "";
+        const re = new RegExp(`"(${cwd}[^"]*)"`, "g");
+        const rt = JSON.stringify(mkRoutes(cwd), null, 2).replace(
+          re,
+          (_, p) => {
+            const mod = `M${id++}`;
+            const imp = path.basename(p) === "_header.svelte" ? "" : "* as";
+            imports += `import ${imp} ${mod} from "./${p}";\n`;
+            return mod;
+          },
+        );
+        return imports + "export default " + rt;
+      }
+    },
+  };
 }
 
 export default {
@@ -58,6 +125,7 @@ export default {
       "process.env.FLOYD_API_URL": `"${process.env.FLOYD_API_URL}"`,
       "process.env.FLOYD_AUTH_URL": `"${process.env.FLOYD_AUTH_URL}"`,
     }),
+    routes("src/routes"),
     resolve({
       browser: true,
     }),

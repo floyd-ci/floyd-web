@@ -25,6 +25,7 @@ plugins:
 rules:
   "@typescript-eslint/camelcase": off
   import/no-default-export: error
+  import/no-unresolved: [error, {ignore: ["@routes@"]}]
   unicorn/catch-error-name: [error, {name: "err"}]
   unicorn/prevent-abbreviations: off
 settings:
