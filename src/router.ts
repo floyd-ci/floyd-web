@@ -1,7 +1,7 @@
 import "svelte";
 
 import * as Index from "./routes/index.svelte";
-import * as NotFound from "./routes/404.svelte";
+import * as NotFound from "./404.svelte";
 import * as Profile from "./routes/profile.svelte";
 import * as NamespaceIndex from "./routes/[namespace]/index.svelte";
 import ProjectHeader from "./routes/[namespace]/[project]/_header.svelte";
