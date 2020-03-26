@@ -1,7 +1,5 @@
 import "svelte";
 
-import * as NotFound from "./404.svelte";
-import routing_tree from "@routes@";
 import {get_page, get_object} from "./request";
 
 type Params = Record<string, string>;
@@ -9,8 +7,8 @@ type Props = Record<string, unknown>;
 
 interface Module {
   default: unknown;
-  preload?: (Params, URLSearchParams) => Promise<Props>;
-  dataurl?: (Params, URLSearchParams) => string;
+  preload?: (params: Params, query: URLSearchParams) => Promise<Props>;
+  dataurl?: (params: Params, query: URLSearchParams) => string;
   pagination?: true;
 }
 
@@ -19,13 +17,13 @@ interface Component {
   props: Props;
 }
 
-interface Route {
+export interface Route {
   module: Module;
   params: Params;
   headers: Array<Component>;
 }
 
-interface Page {
+export interface Page {
   headers: Array<Component>;
   page: Component;
 }
@@ -34,44 +32,42 @@ interface RoutingTree {
   readonly [sub: string]: unknown | Module | string | RoutingTree;
 }
 
-export function select_route(rules: RoutingTree, path: string): Route {
+export function select_route(
+  rules: RoutingTree,
+  path: string,
+): Route | undefined {
   const params: Params = {};
   const headers: Array<Component> = [];
+  let sub: RoutingTree | Module | string | unknown;
 
   const pieces: string[] = path.split("/").filter(Boolean);
   for (let i = 0; i < pieces.length; ++i) {
     let piece: string = pieces[i];
 
-    let subRules;
-    if ((subRules = rules[piece] || rules[":"])) {
+    if ((sub = rules[piece] || rules[":"])) {
       // noop
-    } else if ((subRules = rules["*"])) {
+    } else if ((sub = rules["*"])) {
       piece = pieces.slice(i).join("/");
       i = pieces.length;
     } else {
-      return {module: NotFound, params: {}, headers: []};
+      return;
     }
 
-    rules = subRules;
+    rules = sub as RoutingTree;
 
-    const param = rules["~"];
-    if (param) {
-      params[param as string] = piece;
+    if ((sub = rules["~"])) {
+      params[sub as string] = piece;
     }
 
-    const head = rules["/"];
-    if (head) {
+    if ((sub = rules["/"])) {
       const props = Object.assign({segment: pieces[i + 1]}, params);
-      headers.push({component: head, props});
+      headers.push({component: sub, props});
     }
   }
 
-  const module = rules["@"];
-  if (!module) {
-    return {module: NotFound, params: {}, headers: []};
+  if ((sub = rules["@"])) {
+    return {module: sub as Module, params, headers};
   }
-
-  return {module: module as Module, params, headers};
 }
 
 export async function load_route(
@@ -99,9 +95,4 @@ export async function load_route(
   }
 
   return {headers, page: {component, props}};
-}
-
-export function select_page(location: Location): Promise<Page> {
-  const route = select_route(routing_tree, location.pathname);
-  return load_route(route, new URLSearchParams(location.search));
 }
