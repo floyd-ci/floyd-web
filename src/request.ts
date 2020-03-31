@@ -1,4 +1,4 @@
-import {add_auth_header} from "./auth";
+import {get_token} from "./auth";
 
 interface Page<T> {
   pagedata: T[];
@@ -9,6 +9,13 @@ interface Page<T> {
 }
 
 const API_URL = process.env.FLOYD_API_URL;
+
+async function add_auth_header(headers: Headers): Promise<void> {
+  const token = await get_token();
+  if (token !== "") {
+    headers.set("Authorization", "Bearer " + token);
+  }
+}
 
 export async function fetch_json<T>(url: string): Promise<T> {
   const response = await fetch(`${API_URL}/${url}`);

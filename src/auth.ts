@@ -49,13 +49,6 @@ export async function get_token(): Promise<string> {
   return token;
 }
 
-export async function add_auth_header(headers: Headers): Promise<void> {
-  const token = await get_token();
-  if (token !== "") {
-    headers.set("Authorization", "Bearer " + token);
-  }
-}
-
 export function logout(): void {
   fetch(`${AUTH_URL}/logout`, {
     method: "POST",
