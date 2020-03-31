@@ -21,25 +21,27 @@ async function add_auth_header(
   return headers;
 }
 
-export async function fetch_json<T>(url: string): Promise<T> {
-  const response = await fetch(`${API_URL}/${url}`);
+export async function request<T>(
+  resource: string,
+  init: Record<string, any> = {}, // eslint-disable-line @typescript-eslint/no-explicit-any
+  extract = (response: Response): Promise<T> => response.json(),
+): Promise<T> {
+  const response = await fetch(resource, init);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
-  return response.json();
+  return extract(response);
+}
+
+export function fetch_json<T>(url: string): Promise<T> {
+  return request<T>(`${API_URL}/${url}`);
 }
 
 export async function get_object<T>(url: string): Promise<T> {
   const headers = await add_auth_header({
     Accept: "application/vnd.pgrst.object+json",
   });
-
-  const response = await fetch(`${API_URL}/${url}`, {headers});
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-
-  return response.json();
+  return request<T>(`${API_URL}/${url}`, {headers});
 }
 
 export async function get_page<T>(
@@ -56,22 +58,23 @@ export async function get_page<T>(
     "Range-unit": "items",
   });
 
-  const response = await fetch(`${API_URL}/${url}`, {headers});
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
+  const extract = async (response: Response): Promise<Page<T>> => {
+    const content_range = response.headers.get("Content-Range");
+    if (!content_range) {
+      throw new Error("Header Content-Range is missing");
+    }
 
-  const content_range = response.headers.get("Content-Range");
-  if (!content_range) {
-    throw new Error("Header Content-Range is missing");
-  }
-  const [, total] = content_range.split("/");
-  const num_pages = Math.trunc((+total - 1) / per_page) + 1;
-  if (page > num_pages) {
-    throw new Error("page number is too big");
-  }
+    const [, total] = content_range.split("/");
+    const num_pages = Math.trunc((+total - 1) / per_page) + 1;
+    if (page > num_pages) {
+      throw new Error("page number is too big");
+    }
 
-  const pagedata = await response.json();
-  const pagination = num_pages > 1 ? {current: page, total: num_pages} : null;
-  return {pagedata, pagination};
+    const pagedata = await response.json();
+    const pagination =
+      num_pages > 1 ? {current: page, total: num_pages} : undefined;
+    return {pagedata, pagination};
+  };
+
+  return request<Page<T>>(`${API_URL}/${url}`, {headers}, extract);
 }
