@@ -10,11 +10,15 @@ interface Page<T> {
 
 const API_URL = process.env.FLOYD_API_URL;
 
-async function add_auth_header(headers: Headers): Promise<void> {
+async function add_auth_header(
+  record: Record<string, string>,
+): Promise<Headers> {
+  const headers = new Headers(record);
   const token = await get_token();
   if (token !== "") {
     headers.set("Authorization", "Bearer " + token);
   }
+  return headers;
 }
 
 export async function fetch_json<T>(url: string): Promise<T> {
@@ -26,11 +30,10 @@ export async function fetch_json<T>(url: string): Promise<T> {
 }
 
 export async function get_object<T>(url: string): Promise<T> {
-  const headers = new Headers({
+  const headers = await add_auth_header({
     Accept: "application/vnd.pgrst.object+json",
   });
 
-  await add_auth_header(headers);
   const response = await fetch(`${API_URL}/${url}`, {headers});
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -47,13 +50,12 @@ export async function get_page<T>(
   const from = (page - 1) * per_page;
   const to = from + per_page - 1;
 
-  const headers = new Headers({
+  const headers = await add_auth_header({
     Prefer: "count=exact",
     Range: `${from}-${to}`,
     "Range-unit": "items",
   });
 
-  await add_auth_header(headers);
   const response = await fetch(`${API_URL}/${url}`, {headers});
   if (!response.ok) {
     throw new Error(response.statusText);
