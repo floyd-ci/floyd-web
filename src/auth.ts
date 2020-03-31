@@ -42,10 +42,15 @@ async function renewToken(): Promise<void> {
 
 export {store as claims};
 
-export async function add_auth_header(headers: Headers): Promise<void> {
+export async function get_token(): Promise<string> {
   if (claims != null && claims.exp <= Math.floor(Date.now() / 1000)) {
     await renewToken();
   }
+  return token;
+}
+
+export async function add_auth_header(headers: Headers): Promise<void> {
+  const token = await get_token();
   if (token !== "") {
     headers.set("Authorization", "Bearer " + token);
   }
