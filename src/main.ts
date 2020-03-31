@@ -18,14 +18,10 @@ const app = new App({
   target: document.body,
 });
 
-function select_page(location: Location): Promise<Page> {
-  const notfound: Route = {module: NotFound, params: {}, headers: []};
-  const route = select_route(routing_tree, location.pathname);
-  return load_route(route || notfound, new URLSearchParams(location.search));
-}
-
 async function navigate(): Promise<void> {
-  const page = await select_page(location);
+  const notfound: Route = {module: NotFound, params: {}, headers: []};
+  const route = select_route(routing_tree, location.pathname) || notfound;
+  const page = await load_route(route, new URLSearchParams(location.search));
   app.$set(page);
 }
 
