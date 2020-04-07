@@ -3,11 +3,8 @@
   import SignOutIcon from "../icons/sign-out.svelte";
 
   import {claims, logout, login_url} from "../auth";
-  import {md5} from "../md5";
 
   let menu_active = false;
-
-  $: tag = md5(($claims && $claims.email) || "");
 </script>
 
 <nav class="navbar is-light">
@@ -36,9 +33,9 @@
             <a href="/" class="navbar-link">
               <div class="image is-24x24">
                 <img
-                  alt=""
+                  alt="@{$claims.login}"
                   class="is-rounded"
-                  src="https://gravatar.com/avatar/{tag}?d=mp&s=24&f=y" />
+                  src="https://github.com/{$claims.login}?size=24" />
               </div>
             </a>
             <div class="navbar-dropdown is-right">
