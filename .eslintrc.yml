@@ -28,6 +28,7 @@ rules:
   import/no-unresolved: [error, {ignore: ["@routes@"]}]
   unicorn/catch-error-name: [error, {name: "err"}]
   unicorn/prevent-abbreviations: off
+  unicorn/no-null: warn
 settings:
   import/resolver:
     node:

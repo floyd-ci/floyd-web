@@ -2,10 +2,10 @@
   import {fetch_json} from "../../../../request.ts";
   import {get_file} from "../../../../service/github.js";
 
-  const filterCov = n => (n === -1 ? "" : n);
+  const filterCov = (n) => (n === -1 ? "" : n);
 
   function getDiagnosticsForLine(diagnostics, n) {
-    return diagnostics.filter(diag => diag.line_nr === n);
+    return diagnostics.filter((diag) => diag.line_nr === n);
   }
 
   function combine([content, coverage, diagnostics]) {

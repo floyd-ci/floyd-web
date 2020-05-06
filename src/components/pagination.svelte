@@ -7,7 +7,7 @@
 
   const query = new URLSearchParams(location.search);
 
-  const href = page => {
+  const href = (page) => {
     query.set("page", page);
     return "?" + query.toString();
   };

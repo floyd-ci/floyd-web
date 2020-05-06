@@ -6,7 +6,7 @@
   export let segment;
 
   $: slug = `/${namespace}/${project}/jobs/${job}`;
-  $: active = value => (segment === value ? "is-active" : null);
+  $: active = (value) => (segment === value ? "is-active" : null);
 </script>
 
 <nav class="navbar has-shadow">
