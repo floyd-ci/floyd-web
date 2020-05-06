@@ -1,7 +1,7 @@
 <script>
   export let page;
 
-  $: href = (function() {
+  $: href = (function () {
     const query = new URLSearchParams(location.search);
     query.set("page", page);
     return "?" + query.toString();

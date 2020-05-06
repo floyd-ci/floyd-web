@@ -34,7 +34,7 @@ function mkRoutes(cwd) {
   return fromEntries(
     fs
       .readdirSync(cwd)
-      .map(item => {
+      .map((item) => {
         const resolved = path.join(cwd, item);
         const is_dir = fs.statSync(resolved).isDirectory();
         const ext = path.extname(item);
@@ -67,7 +67,7 @@ function mkRoutes(cwd) {
 function routes(cwd) {
   return {
     name: "routes",
-    resolveId: id => (id === "@routes@" ? "\0routes" : null),
+    resolveId: (id) => (id === "@routes@" ? "\0routes" : null),
     load(id) {
       if (id == "\0routes") {
         let id = 0;

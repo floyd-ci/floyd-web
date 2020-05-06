@@ -20,7 +20,7 @@
 
   export let pagedata = [];
 
-  $: href = id => `/${namespace}/${project}/jobs/${job}/tests/${id}`;
+  $: href = (id) => `/${namespace}/${project}/jobs/${job}/tests/${id}`;
 </script>
 
 <!-- show Test AND DynamicAnalysis -->
