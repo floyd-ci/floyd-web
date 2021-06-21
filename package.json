@@ -30,7 +30,7 @@
     "jest-localstorage-mock": "2.4.2",
     "node-sass": "4.14.1",
     "prettier": "2.0.5",
-    "prettier-plugin-svelte": "1.1.0",
+    "prettier-plugin-svelte": "2.3.1",
     "rollup": "2.8.0",
     "rollup-plugin-browsersync": "1.1.0",
     "rollup-plugin-copy": "3.3.0",
